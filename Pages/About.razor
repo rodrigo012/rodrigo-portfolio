@@ -1,0 +1,35 @@
+@page "/about"
+@inject PortfolioDataService Data
+
+<PageTitle>Sobre mí · @Data.Site.Name</PageTitle>
+
+<div class="container">
+    <section>
+        <h1 class="section-title">Sobre mí</h1>
+        <p class="section-subtitle">@Data.Site.Role · @Data.Site.Location</p>
+
+        <div class="card card-static" style="max-width: 760px;">
+            <p class="detail-text">@Data.AboutText</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Skills</h2>
+        <p class="section-subtitle">Tecnologías y prácticas con las que trabajo día a día.</p>
+
+        <div class="grid grid-3">
+            @foreach (var category in Data.GetSkillCategories())
+            {
+                <div class="card card-static skill-category">
+                    <h3><span>@category.Icon</span> @category.Name</h3>
+                    <div class="chip-list">
+                        @foreach (var skill in category.Skills)
+                        {
+                            <span class="chip">@skill.Name</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</div>

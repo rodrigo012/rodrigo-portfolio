@@ -1,0 +1,110 @@
+@page "/projects/{Slug}"
+@inject PortfolioDataService Data
+
+@if (_project is null)
+{
+    <PageTitle>Proyecto no encontrado</PageTitle>
+    <div class="container">
+        <h1 class="section-title">Proyecto no encontrado</h1>
+        <p class="section-subtitle">No existe ningún proyecto con la dirección "@Slug".</p>
+        <a class="btn btn-primary" href="/projects">← Volver a proyectos</a>
+    </div>
+}
+else
+{
+    <PageTitle>@_project.Name · @Data.Site.Name</PageTitle>
+
+    <div class="container">
+        <div class="detail-header">
+            <a class="btn btn-ghost" href="/projects">← Volver a proyectos</a>
+            <h1 style="margin-top: 0.75rem;">@_project.Name</h1>
+            <div class="detail-meta">
+                <span class="status-badge status-@_project.Status.ToString().ToLower()">@_project.Status.ToDisplay()</span>
+                <span class="project-type">@_project.Type</span>
+            </div>
+            <p class="section-subtitle" style="max-width: 720px;">@_project.ShortDescription</p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Descripción</h2>
+            <p class="detail-text" style="max-width: 760px;">@_project.LongDescription</p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Tecnologías</h2>
+            <div class="chip-list">
+                @foreach (var tech in _project.Technologies)
+                {
+                    <span class="chip chip-accent">@tech</span>
+                }
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2>Funcionalidades principales</h2>
+            <ul class="feature-list">
+                @foreach (var feature in _project.Features)
+                {
+                    <li>@feature</li>
+                }
+            </ul>
+        </div>
+
+        <div class="detail-section">
+            <h2>Qué problema resuelve</h2>
+            <p class="detail-text" style="max-width: 760px;">@_project.ProblemSolved</p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Qué demuestra técnicamente</h2>
+            <p class="detail-text" style="max-width: 760px;">@_project.WhatItDemonstrates</p>
+        </div>
+
+        <div class="detail-section">
+            <h2>Screenshots</h2>
+            @if (_project.Screenshots.Count == 0)
+            {
+                <div class="screenshot-placeholder">
+                    <p style="margin: 0;">📷 Screenshots próximamente</p>
+                    <small>
+                        Para agregarlas: copiá las imágenes a <code>wwwroot/img/projects/@(_project.Slug)/</code>
+                        y cargá las rutas en la propiedad <code>Screenshots</code> del proyecto en PortfolioDataService.
+                    </small>
+                </div>
+            }
+            else
+            {
+                <div class="screenshot-grid">
+                    @foreach (var screenshot in _project.Screenshots)
+                    {
+                        <img src="@screenshot" alt="Screenshot de @_project.Name" loading="lazy" />
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="detail-section">
+            <h2>Repositorio</h2>
+            @if (string.IsNullOrWhiteSpace(_project.RepositoryUrl))
+            {
+                <span class="repo-note">📦 Repositorio: pendiente de publicación</span>
+            }
+            else
+            {
+                <a class="btn btn-outline" href="@_project.RepositoryUrl" target="_blank" rel="noopener">Ver repositorio →</a>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Slug { get; set; } = string.Empty;
+
+    private Project? _project;
+
+    protected override void OnParametersSet()
+    {
+        _project = Data.GetProjectBySlug(Slug);
+    }
+}

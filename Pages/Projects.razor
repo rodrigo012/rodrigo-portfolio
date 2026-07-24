@@ -1,0 +1,18 @@
+@page "/projects"
+@inject PortfolioDataService Data
+
+<PageTitle>Proyectos · @Data.Site.Name</PageTitle>
+
+<div class="container">
+    <h1 class="section-title">Proyectos</h1>
+    <p class="section-subtitle">
+        Casos de portfolio que muestran cómo encaro sistemas empresariales, apps personales y demos de arquitectura.
+    </p>
+
+    <div class="grid grid-2">
+        @foreach (var project in Data.GetProjects())
+        {
+            <ProjectCard Project="project" />
+        }
+    </div>
+</div>

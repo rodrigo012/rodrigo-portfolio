@@ -1,0 +1,48 @@
+@page "/contact"
+@inject PortfolioDataService Data
+
+<PageTitle>Contacto · @Data.Site.Name</PageTitle>
+
+<div class="container">
+    <h1 class="section-title">Contacto</h1>
+    <p class="section-subtitle">¿Tenés un proyecto o una propuesta? Escribime.</p>
+
+    <div class="contact-list">
+        <div class="card card-static contact-item">
+            <span class="icon">✉️</span>
+            <div>
+                <small>Email</small>
+                <a href="mailto:@Data.Site.Email">@Data.Site.Email</a>
+            </div>
+        </div>
+
+        <div class="card card-static contact-item">
+            <span class="icon">💻</span>
+            <div>
+                <small>GitHub</small>
+                <a href="@Data.Site.GitHubUrl" target="_blank" rel="noopener">@Data.Site.GitHubUrl</a>
+            </div>
+        </div>
+
+        <div class="card card-static contact-item">
+            <span class="icon">🔗</span>
+            <div>
+                <small>LinkedIn</small>
+                <a href="@Data.Site.LinkedInUrl" target="_blank" rel="noopener">@Data.Site.LinkedInUrl</a>
+            </div>
+        </div>
+
+        <div class="card card-static contact-item">
+            <span class="icon">📍</span>
+            <div>
+                <small>Ubicación</small>
+                <span>@Data.Site.Location</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-hint">
+        💡 Estos datos son placeholders: editá <code>Services/PortfolioDataService.cs</code> (propiedad <code>Site</code>)
+        con tu email y tus links reales de GitHub y LinkedIn.
+    </div>
+</div>

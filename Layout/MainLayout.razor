@@ -1,0 +1,47 @@
+@inherits LayoutComponentBase
+@inject PortfolioDataService Data
+
+<div class="site">
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="brand" @onclick="CloseMenu">
+                <span class="brand-mark">RR</span>
+                <span class="brand-text">Rodrigo Román</span>
+            </a>
+
+            <button class="nav-toggle" @onclick="ToggleMenu" aria-label="Abrir menú">
+                @(_menuOpen ? "✕" : "☰")
+            </button>
+
+            <nav class="site-nav @(_menuOpen ? "open" : "")">
+                <NavLink href="/" Match="NavLinkMatch.All" @onclick="CloseMenu">Inicio</NavLink>
+                <NavLink href="/about" @onclick="CloseMenu">Sobre mí</NavLink>
+                <NavLink href="/projects" @onclick="CloseMenu">Proyectos</NavLink>
+                <NavLink href="/code" @onclick="CloseMenu">Código</NavLink>
+                <NavLink href="/contact" @onclick="CloseMenu">Contacto</NavLink>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        @Body
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>© @DateTime.Now.Year @Data.Site.Name · @Data.Site.Location</span>
+            <div class="footer-links">
+                <a href="@Data.Site.GitHubUrl" target="_blank" rel="noopener">GitHub</a>
+                <a href="@Data.Site.LinkedInUrl" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="mailto:@Data.Site.Email">Email</a>
+            </div>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private bool _menuOpen;
+
+    private void ToggleMenu() => _menuOpen = !_menuOpen;
+    private void CloseMenu() => _menuOpen = false;
+}

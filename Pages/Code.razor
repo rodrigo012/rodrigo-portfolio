@@ -1,0 +1,21 @@
+@page "/code"
+@inject PortfolioDataService Data
+
+<PageTitle>Código destacado · @Data.Site.Name</PageTitle>
+
+<div class="container">
+    <h1 class="section-title">Código destacado</h1>
+    <p class="section-subtitle">
+        Ejemplos genéricos del estilo de código con el que trabajo: servicios, validaciones, componentes y contratos de API.
+    </p>
+
+    @foreach (var snippet in Data.GetCodeSnippets())
+    {
+        <div class="snippet">
+            <h2 style="font-size: 1.2rem;">@snippet.Title</h2>
+            <span class="snippet-lang">@snippet.Language</span>
+            <p class="snippet-desc">@snippet.Description</p>
+            <pre class="code-block"><code>@snippet.Code</code></pre>
+        </div>
+    }
+</div>

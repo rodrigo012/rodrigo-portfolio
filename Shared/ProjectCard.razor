@@ -1,0 +1,33 @@
+<div class="card project-card">
+    <div class="project-card-header">
+        <div>
+            <h3>@Project.Name</h3>
+            <span class="project-type">@Project.Type</span>
+        </div>
+        <span class="status-badge status-@Project.Status.ToString().ToLower()">
+            @Project.Status.ToDisplay()
+        </span>
+    </div>
+
+    <p>@Project.ShortDescription</p>
+
+    <div class="chip-list">
+        @foreach (var tech in Project.Technologies.Take(4))
+        {
+            <span class="chip">@tech</span>
+        }
+        @if (Project.Technologies.Count > 4)
+        {
+            <span class="chip chip-accent">+@(Project.Technologies.Count - 4)</span>
+        }
+    </div>
+
+    <div class="project-card-footer">
+        <a class="btn btn-outline" href="/projects/@Project.Slug">Ver detalle →</a>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public Project Project { get; set; } = default!;
+}

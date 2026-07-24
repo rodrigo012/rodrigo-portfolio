@@ -1,0 +1,36 @@
+@page "/"
+@inject PortfolioDataService Data
+
+<PageTitle>@Data.Site.Name · @Data.Site.Role</PageTitle>
+
+<div class="container">
+    <section class="hero">
+        <span class="hero-role">@Data.Site.Role</span>
+        <h1>Hola, soy <span class="accent">@Data.Site.Name</span></h1>
+        <p class="hero-tagline">@Data.Site.Tagline</p>
+
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="/projects">Ver proyectos</a>
+            <a class="btn btn-outline" href="/about">Skills</a>
+            <a class="btn btn-outline" href="/contact">Contacto</a>
+            <a class="btn btn-ghost" href="@Data.Site.GitHubUrl" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-ghost" href="@Data.Site.LinkedInUrl" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Proyectos destacados</h2>
+        <p class="section-subtitle">Una selección de los proyectos que representan mi forma de trabajar.</p>
+
+        <div class="grid grid-3">
+            @foreach (var project in Data.GetProjects().Take(3))
+            {
+                <ProjectCard Project="project" />
+            }
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+            <a class="btn btn-outline" href="/projects">Ver todos los proyectos →</a>
+        </div>
+    </section>
+</div>
